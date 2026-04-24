@@ -2,6 +2,7 @@ import tkinter as tk
 import random
 
 window = tk.Tk()
+window.title("Minesweeper V2 - 416aab")
 
 ROWS = 10
 COLUMNS = 10
@@ -31,7 +32,7 @@ def setup_grid():
 
 
 def make_top_button():
-    global rowsin, columnsin, frequencyin
+    global rowsin, columnsin, frequencyin, reset_btn
 
     rowsin = tk.Entry(top_frame, width=5)
     rowsin.insert(0, str(ROWS))
@@ -62,7 +63,7 @@ def setconfig():
         frequency = int(frequencyin.get())
         
     except:
-        print("invalid input")
+        #print("invalid input")
         return
 
     if rows < 5:
@@ -176,7 +177,7 @@ def left_click(row, column):
 
     if gamemap[row][column] == 1:
         buttons[(row, column)].config(text="  X  ", bg="red")
-        print("LOSS")
+        #print("LOSS")
         over = True
         return
 
@@ -202,6 +203,8 @@ def right_click(row, column):
 
 
 def check_win():
+    
+    global reset_btn
     safe_tiles = 0
 
     for r in range(ROWS):
@@ -210,13 +213,15 @@ def check_win():
                 safe_tiles += 1
 
     if len(revealed) == safe_tiles:
-        print("WIN")
-        reset()
+        #print("WIN")
+        reset_btn.config(text="🎉")
 
 
 def reset():
-    global gamemap, over
-
+    global gamemap, over, reset_btn
+    
+    reset_btn.config(text="🙂")
+    
     over = False
     revealed.clear()
     flags.clear()
@@ -233,3 +238,4 @@ make_buttons()
 reset()
 
 window.mainloop()
+
